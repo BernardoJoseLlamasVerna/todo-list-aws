@@ -16,7 +16,7 @@ disable_rollback = true
 [staging.deploy]
 [staging.deploy.parameters]
 stack_name = "todo-list-aws-staging"
-s3_bucket = "aws-sam-cli-managed-staging-samclisourcebucket-XXXXX" #Incluir bucket propio
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xzwbqz2y0r12" #Incluir bucket propio
 s3_prefix = "todo-list-aws"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
@@ -27,7 +27,7 @@ image_repositories = []
 [production.deploy]
 [production.deploy.parameters]
 stack_name = "todo-list-aws-production"
-s3_bucket = "aws-sam-cli-managed-production-samclisourcebucket-XXXXX" #Incluir bucket propio
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xzwbqz2y0r12" #Incluir bucket propio
 s3_prefix = "todo-list-aws"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
