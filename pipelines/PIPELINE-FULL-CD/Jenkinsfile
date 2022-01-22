@@ -21,6 +21,9 @@ pipeline {
                 sshagent(credentials: ['github']) {
                     sh "ls -lart ~/"
                     sh "cat /proc/sys/kernel/hostname"
+                    sh "pwd"
+                    sh "whoami"
+                    sh "git config --list"
                     sh "git push origin master"
                 }
 
