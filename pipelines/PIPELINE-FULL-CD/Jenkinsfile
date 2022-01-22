@@ -19,8 +19,7 @@ pipeline {
                     git merge develop
                 """, label: "Merging code to master"
                 sshagent(['github']) {
-                    sh "sleep 5000"
-                    sh "git push origin master"
+                    sh "git remote set-url origin https://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@github.com/BernardoJoseLlamasVerna/todo-list-aws"
                 }
 
             }
