@@ -18,7 +18,7 @@ pipeline {
                     git checkout -b master origin/master
                     git merge develop
                 """, label: "Merging code to master"
-                sshagent(credentials: ['github']) {
+                sshagent(['sshGitHub']) {
                     sh "ls -lart ~/"
                     sh "cat /proc/sys/kernel/hostname"
                     sh "pwd"
