@@ -19,6 +19,7 @@ pipeline {
                     git merge develop
                 """, label: "Merging code to master"
                 sshagent(['github']) {
+                    sh "sleep 5000"
                     sh "git push origin master"
                 }
 
