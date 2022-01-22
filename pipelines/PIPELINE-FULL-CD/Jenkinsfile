@@ -11,21 +11,14 @@ pipeline {
         }
         stage('Merge'){
             steps{
-                script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'sshGitHub', keyFileVariable: '')]) {
                         sh script: """
                             set -x
                             git branch -a
                             git checkout -b develop origin/develop
                             git checkout -b master origin/master
                             git merge develop
-                            git remote set-url origin https://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@github.com/BernardoJoseLlamasVerna/todo-list-aws.git
-                            git config --global user.name "BernardoJoseLlamasVerna"
                             git push origin master
                         """, label: "Merging code to master"
-                    }
-                }
-
             }
         }
         stage('Production'){
