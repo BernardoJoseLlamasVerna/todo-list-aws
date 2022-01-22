@@ -24,7 +24,6 @@ pipeline {
                     sh "pwd"
                     sh "whoami"
                     sh "git config --list"
-                    sh "sleep 5000"
                     sh "git push origin master"
                 }
 
