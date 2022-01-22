@@ -12,7 +12,7 @@ pipeline {
         stage('Merge'){
             steps{
                 script {
-                    withCredentials([gitUsernamePassword(credentialsId: 'github_user_pass', gitToolName: 'Default')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'sshGitHub', keyFileVariable: '')]) {
                         sh script: """
                             set -x
                             git branch -a
