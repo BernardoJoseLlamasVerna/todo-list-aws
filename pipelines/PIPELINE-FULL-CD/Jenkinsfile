@@ -19,6 +19,8 @@ pipeline {
                     git merge develop
                 """, label: "Merging code to master"
                 sshagent(credentials: ['github']) {
+                    sh "ls -lart ~/"
+                    sh "ls -lart ~/.ssh"
                     sh "git push origin master"
                 }
 
