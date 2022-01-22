@@ -3,12 +3,14 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "todo-list-aws"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-XXXXX" #Incluir bucket propio
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xzwbqz2y0r12" #Incluir bucket propio
 s3_prefix = "todo-list-aws"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
 parameter_overrides = "Stage=\"default\""
 image_repositories = []
+confirm_changeset = true
+disable_rollback = true
 
 [staging]
 [staging.deploy]
