@@ -17,9 +17,13 @@ pipeline {
                             git checkout -b develop origin/develop
                             git checkout -b master origin/master
                             git merge develop
+                            git remote -v
                             git remote remove origin
+                            git remote -v
                             git remote add origin https://github.com/BernardoJoseLlamasVerna/todo-list-aws.git
+                            git remote -v
                             git remote set-url origin git@github.com/BernardoJoseLlamasVerna/todo-list-aws.git
+                            git remote -v
                             git push origin master
                         """, label: "Merging code to master"
             }
