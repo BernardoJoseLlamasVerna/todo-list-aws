@@ -6,14 +6,14 @@ import json
 import functools
 from botocore.exceptions import ClientError
 
+
 def get_table(dynamodb=None):
     print('##### get_table ####')
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
             print(
-                'URL dynamoDB:'+
-                URL
+                'URL dynamoDB:'+ URL
             )
             boto3.client = functools.partial(
                 boto3.client,
@@ -82,7 +82,7 @@ def put_item(text, dynamodb=None):
     timestamp = str(time.time())
     print('#### Table name ####')
     print(
-        'Table name:' +table.name
+        'Table name:' + table.name
     )
     print('#### Table name ####')
     item = {
@@ -179,7 +179,7 @@ def create_todo_table(dynamodb):
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
     print(
-        'Creating Table with name:' +tableName
+        'Creating Table with name:' + tableName
     )
     table = dynamodb.create_table(
         TableName=tableName,
