@@ -13,7 +13,7 @@ def get_table(dynamodb=None):
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
             print(
-                'URL dynamoDB:'+ URL
+                'URL dynamoDB:' + URL
             )
             boto3.client = functools.partial(
                 boto3.client,
