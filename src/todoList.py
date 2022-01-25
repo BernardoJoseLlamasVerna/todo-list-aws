@@ -8,22 +8,43 @@ from botocore.exceptions import ClientError
 
 
 def get_table(dynamodb=None):
+    print('##### get_table ####')
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
-            print('URL dynamoDB:'+URL)
-            boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-            boto3.resource = functools.partial(boto3.resource,
-                                               endpoint_url=URL)
-        dynamodb = boto3.resource("dynamodb")
+            print(
+                'URL dynamoDB:' + URL
+            )
+            boto3.client = functools.partial(
+                boto3.client,
+                endpoint_url=URL
+            )
+            boto3.resource = functools.partial(
+                boto3.resource,
+                endpoint_url=URL
+            )
+        variable_dynamodb = "dynamodb"
+        dynamodb = boto3.resource(
+            variable_dynamodb
+        )
     # fetch todo from the database
-    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+
+    print('#### DYNAMODB_TABLE ####')
+    variable_dynamo_table = 'DYNAMODB_TABLE'
+    variable_dynamodb_environ = os.environ[variable_dynamo_table]
+    table = dynamodb.Table(
+        variable_dynamodb_environ
+    )
     return table
 
 
 def get_item(key, dynamodb=None):
-    table = get_table(dynamodb)
+    print('#### get_item #####')
+    table = get_table(
+        dynamodb
+    )
     try:
+        print('#### result ####')
         result = table.get_item(
             Key={
                 'id': key
@@ -31,24 +52,39 @@ def get_item(key, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(
+            e.response
+            ['Error']
+            ['Message']
+        )
     else:
-        print('Result getItem:'+str(result))
+        print('####################')
+        print(
+            'Result getItem:'+str(result)
+        )
+        print('####################')
         if 'Item' in result:
             return result['Item']
 
 
 def get_items(dynamodb=None):
+    print('##### get_items ####')
     table = get_table(dynamodb)
     # fetch todo from the database
+    print('#### result ####')
     result = table.scan()
     return result['Items']
 
 
 def put_item(text, dynamodb=None):
+    print('#### put_item #####')
     table = get_table(dynamodb)
     timestamp = str(time.time())
-    print('Table name:' + table.name)
+    print('#### Table name ####')
+    print(
+        'Table name:' + table.name
+    )
+    print('#### Table name ####')
     item = {
         'id': str(uuid.uuid1()),
         'text': text,
@@ -60,18 +96,29 @@ def put_item(text, dynamodb=None):
         # write the todo to the database
         table.put_item(Item=item)
         # create a response
-        response = {
-            "statusCode": 200,
-            "body": json.dumps(item)
-        }
+        statusCode = "statusCode"
+        status_ok = 200
+        body = "body"
+        body_value = json.dumps(item)
+        print('#### response ####')
+        response = {}
+        response[statusCode] = status_ok
+        response[body] = body_value
+        print('#### response ####')
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        # print error message:
+        print(
+            e.response
+            ['Error']
+            ['Message']
+        )
     else:
         return response
 
 
 def update_item(key, text, checked, dynamodb=None):
+    print('#### update_item ####')
     table = get_table(dynamodb)
     timestamp = int(time.time() * 1000)
     # update the todo in the database
@@ -95,12 +142,18 @@ def update_item(key, text, checked, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(
+            e.response
+            ['Error']
+            ['Message']
+        )
     else:
+        print('#### result[Attributes] ####')
         return result['Attributes']
 
 
 def delete_item(key, dynamodb=None):
+    print('#### delete_item ####')
     table = get_table(dynamodb)
     # delete the todo from the database
     try:
@@ -111,15 +164,23 @@ def delete_item(key, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        # error message
+        print(
+            e.response
+            ['Error']
+            ['Message']
+        )
     else:
         return
 
 
 def create_todo_table(dynamodb):
+    print('#### create_todo_table ####')
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
-    print('Creating Table with name:' + tableName)
+    print(
+        'Creating Table with name:' + tableName
+    )
     table = dynamodb.create_table(
         TableName=tableName,
         KeySchema=[
@@ -141,7 +202,12 @@ def create_todo_table(dynamodb):
     )
 
     # Wait until the table exists.
-    table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
+    print('#### Wait until the table exists ####')
+    table\
+        .meta\
+        .client\
+        .get_waiter('table_exists')\
+        .wait(TableName=tableName)
     if (table.table_status != 'ACTIVE'):
         raise AssertionError()
 
